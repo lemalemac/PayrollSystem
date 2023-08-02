@@ -33,7 +33,7 @@ class AppUser(models.Model):
     role_id = models.UUIDField(null=True)
     salary_id = models.UUIDField(null=True)
     department_id = models.UUIDField(null=True)
-    business_id = models.UUIDField(null=True)
+    employee_id = models.UUIDField(null=True)
 
     class Meta:
         db_table = 'app_user'
