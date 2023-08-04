@@ -10,9 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import User
 from django.core.serializers import serialize
 
-from .models import User, Deduction, Campus, Bonus, Commission, UserRoles, Payslip
+from .models import User, Deduction, Campus, Bonus, Commission, UserRoles, Payslip, Salary
 from django.shortcuts import get_object_or_404
-import weasyprint
+import pandas as pd
+
 
 def app(request):
     if request.session.get('login_flag'):
@@ -258,17 +259,96 @@ def delete(request):
     return JsonResponse(data)
 
 
-def generate_pdf(request):
-    if request.method == "POST":
-        document_type = request.POST.get('first_name')
-        # Render the HTML template using Django's render function
-        html_template = 'templates/forms/bootstrap_template.html'
-        rendered_html = render(request, html_template).content
+def audit_export_to_excel(request):
+    # Fetch data from the YourModel model
+    queryset = Salary.objects.all()
+    data = list(queryset.values())
 
-        # Generate PDF from the rendered HTML
-        pdf_file = weasyprint.HTML(string=rendered_html).write_pdf()
+    # Convert to a pandas DataFrame
+    dataframe = pd.DataFrame(data)
 
-        # Create an HttpResponse with the PDF content and appropriate headers
-        response = HttpResponse(pdf_file, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="your_bootstrap_page.pdf"'
-        return response
+    # Prepare the Excel file response
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Cache-Control'] = 'no-cache'
+
+    # Export the DataFrame to Excel and attach it to the response
+    dataframe.to_excel(response, index=False, engine='openpyxl')
+
+    return response
+
+
+def kra_export_to_excel(request):
+    # Fetch data from the YourModel model
+    queryset = Salary.objects.all()
+    data = list(queryset.values())
+
+    # Convert to a pandas DataFrame
+    dataframe = pd.DataFrame(data)
+
+    # Prepare the Excel file response
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Cache-Control'] = 'no-cache'
+
+    # Export the DataFrame to Excel and attach it to the response
+    dataframe.to_excel(response, index=False, engine='openpyxl')
+
+    return response
+
+
+def kra_p10_export_to_excel(request):
+    # Fetch data from the YourModel model
+    queryset = Salary.objects.all()
+    data = list(queryset.values())
+
+    # Convert to a pandas DataFrame
+    dataframe = pd.DataFrame(data)
+
+    # Prepare the Excel file response
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Cache-Control'] = 'no-cache'
+
+    # Export the DataFrame to Excel and attach it to the response
+    dataframe.to_excel(response, index=False, engine='openpyxl')
+
+    return response
+
+
+def nssf_export_to_excel(request):
+    # Fetch data from the YourModel model
+    queryset = Salary.objects.all()
+    data = list(queryset.values())
+
+    # Convert to a pandas DataFrame
+    dataframe = pd.DataFrame(data)
+
+    # Prepare the Excel file response
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Cache-Control'] = 'no-cache'
+
+    # Export the DataFrame to Excel and attach it to the response
+    dataframe.to_excel(response, index=False, engine='openpyxl')
+
+    return response
+
+
+def nhif_export_to_excel(request):
+    # Fetch data from the YourModel model
+    queryset = Salary.objects.all()
+    data = list(queryset.values())
+
+    # Convert to a pandas DataFrame
+    dataframe = pd.DataFrame(data)
+
+    # Prepare the Excel file response
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Cache-Control'] = 'no-cache'
+
+    # Export the DataFrame to Excel and attach it to the response
+    dataframe.to_excel(response, index=False, engine='openpyxl')
+
+    return response
