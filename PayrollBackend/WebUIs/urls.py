@@ -12,5 +12,9 @@ urlpatterns = [
   path("modify/", views.modify, name="modify"),
   path("search/", views.search, name="search"),
   path("delete/", views.delete, name="delete"),
+  path("audit/", views.audit_export_to_excel, name="audit"),
+  path("kra/", views.kra_export_to_excel, name="kra"),
+  path("nssf/", views.nssf_export_to_excel, name="nssf"),
+  path("nhif/", views.nhif_export_to_excel, name="nhif"),
   path('employee/<str:employee_id>/', views.employee_details_view, name='employee_details'),
 ]

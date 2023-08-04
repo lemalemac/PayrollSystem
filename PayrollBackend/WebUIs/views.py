@@ -13,11 +13,32 @@ from django.core.serializers import serialize
 from .models import User, Deduction, Campus, Bonus, Commission, UserRoles, Payslip, Salary
 from django.shortcuts import get_object_or_404
 import pandas as pd
+from django.utils import timezone
+from django.db.models import Sum
+from django.db import models
 
 
 def app(request):
     if request.session.get('login_flag'):
-        return render(request, "app.html", {})
+        # Count the total number of users
+        total_users = User.objects.count()
+
+        # Calculate total paye, nssf, nhif, and total basic salary
+        total_paye = Deduction.objects.filter(name='paye').aggregate(total_paye=models.Sum('amount'))['total_paye'] or 0
+        total_nssf = Deduction.objects.filter(name='nssf').aggregate(total_nssf=models.Sum('amount'))['total_nssf'] or 0
+        total_nhif = Deduction.objects.filter(name='nhif').aggregate(total_nhif=models.Sum('amount'))['total_nhif'] or 0
+        total_basic_salary = User.objects.aggregate(total_basic_salary=models.Sum('basic_salary'))[
+                                 'total_basic_salary'] or 0
+
+        context = {
+            'total_users': total_users,
+            'total_paye': total_paye,
+            'total_nssf': total_nssf,
+            'total_nhif': total_nhif,
+            'total_basic_salary': total_basic_salary
+        }
+
+        return render(request, "app.html", context)
     return render(request, "home.html", {})
 
 
@@ -279,35 +300,29 @@ def audit_export_to_excel(request):
 
 
 def kra_export_to_excel(request):
-    # Fetch data from the YourModel model
-    queryset = Salary.objects.all()
-    data = list(queryset.values())
+    # Fetch data for "paye" deductions from the Deduction model
+    paye_deductions = Deduction.objects.filter(name="paye")
+
+    # Collect the associated User data for each "paye" deduction
+    data = []
+    for deduction in paye_deductions:
+        user_data = {
+            'user_name': deduction.user.first_name + ' ' + deduction.user.last_name,
+            'kra_pin': deduction.user.kra_pin,
+            'basic_salary': deduction.user.basic_salary,
+            'deduction_amount': deduction.amount,
+            'is_recurring': deduction.is_recurring,
+            'deduction_date_added': deduction.date_added.astimezone(timezone.utc).replace(tzinfo=None)
+
+        }
+        data.append(user_data)
 
     # Convert to a pandas DataFrame
     dataframe = pd.DataFrame(data)
 
     # Prepare the Excel file response
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
-    response['Cache-Control'] = 'no-cache'
-
-    # Export the DataFrame to Excel and attach it to the response
-    dataframe.to_excel(response, index=False, engine='openpyxl')
-
-    return response
-
-
-def kra_p10_export_to_excel(request):
-    # Fetch data from the YourModel model
-    queryset = Salary.objects.all()
-    data = list(queryset.values())
-
-    # Convert to a pandas DataFrame
-    dataframe = pd.DataFrame(data)
-
-    # Prepare the Excel file response
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Content-Disposition'] = 'attachment; filename=KRA_P10.xlsx'
     response['Cache-Control'] = 'no-cache'
 
     # Export the DataFrame to Excel and attach it to the response
@@ -317,16 +332,28 @@ def kra_p10_export_to_excel(request):
 
 
 def nssf_export_to_excel(request):
-    # Fetch data from the YourModel model
-    queryset = Salary.objects.all()
-    data = list(queryset.values())
+
+    nssf_deductions = Deduction.objects.filter(name="nssf")
+
+    data = []
+    for deduction in nssf_deductions:
+        user_data = {
+            'user_name': deduction.user.first_name + ' ' + deduction.user.last_name,
+            'nssf_no': deduction.user.nssf_no,
+            'basic_salary': deduction.user.basic_salary,
+            'deduction_amount': deduction.amount,
+            'is_recurring': deduction.is_recurring,
+            'deduction_date_added': deduction.date_added.astimezone(timezone.utc).replace(tzinfo=None)
+
+        }
+        data.append(user_data)
 
     # Convert to a pandas DataFrame
     dataframe = pd.DataFrame(data)
 
     # Prepare the Excel file response
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Content-Disposition'] = 'attachment; filename=NSSF_BYPRODUCT.xlsx'
     response['Cache-Control'] = 'no-cache'
 
     # Export the DataFrame to Excel and attach it to the response
@@ -336,16 +363,28 @@ def nssf_export_to_excel(request):
 
 
 def nhif_export_to_excel(request):
-    # Fetch data from the YourModel model
-    queryset = Salary.objects.all()
-    data = list(queryset.values())
+
+    nhif_deductions = Deduction.objects.filter(name="nhif")
+
+    data = []
+    for deduction in nhif_deductions:
+        user_data = {
+            'user_name': deduction.user.first_name + ' ' + deduction.user.last_name,
+            'nhif_no': deduction.user.nhif_no,
+            'basic_salary': deduction.user.basic_salary,
+            'deduction_amount': deduction.amount,
+            'is_recurring': deduction.is_recurring,
+            'deduction_date_added': deduction.date_added.astimezone(timezone.utc).replace(tzinfo=None)
+
+        }
+        data.append(user_data)
 
     # Convert to a pandas DataFrame
     dataframe = pd.DataFrame(data)
 
     # Prepare the Excel file response
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=output.xlsx'
+    response['Content-Disposition'] = 'attachment; filename=NHIF_BYPRODUCT.xlsx'
     response['Cache-Control'] = 'no-cache'
 
     # Export the DataFrame to Excel and attach it to the response
