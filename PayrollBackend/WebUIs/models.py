@@ -183,7 +183,7 @@ class Payslip(models.Model):
 
 
 class Salary(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.CharField(primary_key=True, editable=False, max_length=255)
     payment_date = models.IntegerField()
     salary = models.FloatField()
 
