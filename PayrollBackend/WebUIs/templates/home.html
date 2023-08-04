@@ -30,29 +30,11 @@
                 Please enter your credentials to log in.
             </p>
 
-            <form id="loginForm" method="post" action="/login/" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mx-3 mb-3">
-                    <label for="employeeIDInput" class="form-label">Employee ID</label>
-                    <input name="employee_id" type="text" class="form-control" id="employeeIDInput" placeholder="Enter Employee ID">
-                    <div class="invalid-feedback">
-                        Please enter your Employee ID
-                    </div>
-                </div>
+          <div class="container text-center">
+            <a href="/login/" class="btn btn-success rounded-4 mb-3">Log In</a>
+            <a href="/create/" class="btn btn-outline-success rounded-4 mb-3">Create account</a>
+          </div>
 
-                <div class="mx-3 mb-3">
-                    <label for="passwordInput" class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Enter password">
-                    <div class="invalid-feedback">
-                        Check this field
-                    </div>
-                </div>
-
-                <div class="container text-center">
-                    <button id="login-button" class="btn btn-success rounded-4 mb-3">Log In</button>
-                    <p><a href="#" class="mb-3 link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forgot password?</a></p>
-                </div>
-            </form>
 
         </div>
     </div>

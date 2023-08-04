@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="icon" href="https://www.jkuat.ac.ke/wp-content/uploads/2021/11/cropped-favicon-32x32.png" sizes="32x32">
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{% static 'js/create.js' %}"></script>
+</head>
+<body>
+<div class="d-flex flex-direction-column justify-content-center m-0 p-0">
+    <div class="card mt-5 m-0 p-0" style="width: 80%;">
+        <div class="card-body m-0 p-0">
+            <div class="container d-flex flex-direction-column justify-content-center ms-0 px-0">
+                <div class="col-6 px-0">
+                    <img src="{% static 'images/jkuat-logo.png' %}" class="img-fluid" alt="mpesa-logo">
+                </div>
+            </div>
+
+            <h3 class="text-center mb-2">
+                Payroll Management System - Create employee
+            </h3>
+
+
+            <div id="createCarousel" class="carousel slide rounded p-2 m-0 mx-1 mt-0 mb-3" data-bs-touch="false">
+                <form class="mx-3" id="createForm" method="post" action="/create/" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="carousel-inner">
+                         <div class="carousel-item active">
+                             <p class="form-text mb-3 text-center">
+                                 Enter employee details
+                             </p>
+
+                             <div class="row mb-4">
+                                 <div class="col">
+                                     <label for="first-name" class="form-label">First name</label>
+                                     <input name="first_name" id="first-name" type="text" class="form-control" placeholder="First name" aria-label="">
+                                 </div>
+
+                                 <div class="col">
+                                     <label for="last-name" class="form-label">Last name</label>
+                                     <input name="last_name" id="last-name" type="text" class="form-control" placeholder="Last name" aria-label="">
+                                 </div>
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="emailInput" class="form-label">Email</label>
+                                 <input name="email" type="email" class="form-control" id="emailInput" placeholder="">
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="phoneInput" class="form-label">Phone</label>
+                                 <input name="phone" type="tel" class="form-control" id="phoneInput" placeholder="">
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="idInput" class="form-label">ID Number</label>
+                                 <input name="id_no" type="number" class="form-control" id="idInput" placeholder="">
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="kraInput" class="form-label">KRA Pin.</label>
+                                 <input name="kra_pin" type="text" class="form-control" id="kraInput" placeholder="">
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="nssfnoInput" class="form-label">NSSF No.</label>
+                                 <input name="nssf_no" type="text" class="form-control" id="nssfnoInput" placeholder="">
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="nhifnoInput" class="form-label">NSSF No.</label>
+                                 <input name="nhif_no" type="text" class="form-control" id="nhifnoInput" placeholder="">
+                             </div>
+
+
+
+                             <div class="mb-4">
+                                 <label for="campusInput" class="form-label">Campus</label>
+                                 <select name="campus" class="form-select" id="campusInput">
+                                     <option value="74d95368-35e4-4cce-90f2-31700b1d0190" selected>Main</option>
+                                     <option value="cc5e68ef-0668-44cc-868a-bd22a2063e41">Karen</option>
+                                     <option value="f925ae67-f5da-4a54-971c-e8f5d78c2724">Westlands</option>
+                                     <option value="638d5def-c6d7-456f-b120-82af7a8078aa">Kigali</option>
+                                     <option value="c1bc67d4-44ef-4551-b553-947aa164d7f7">CBD</option>
+                                 </select>
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="schoolInput" class="form-label">School</label>
+                                 <select name="school" class="form-select" id="schoolInput">
+                                     <option value="School of Electrical, Electronic & Information Engineering (SEEIE)" selected>School of Electrical, Electronic & Information Engineering (SEEIE)</option>
+                                     <option value="School of Architecture and Building Science">School of Architecture and Building Science</option>
+                                     <option value="School of Mechanical, Manufacturing and Materials Engineering (SoMMME)">School of Mechanical, Manufacturing and Materials Engineering (SoMMME)</option>
+                                     <option value="School of Civil Engineering and Geomatic Engineering (SCEGE)">School of Civil Engineering and Geomatic Engineering (SCEGE)</option>
+                                     <option value="School of Law">School of Law</option>
+                                     <option value="School of Physical Sciences (SPS)">School of Physical Sciences (SPS)</option>
+                                     <option value="School of Mathematical Sciences (SMS)">School of Mathematical Sciences (SMS)</option>
+                                     <option value="School of Computing and Information Technology(SCIT)">School of Computing and Information Technology(SCIT)</option>
+                                     <option value="School of Business">School of Business</option>
+                                     <option value="School of Entrepreneurship, Procurement & Management">School of Entrepreneurship, Procurement & Management</option>
+                                     <option value="School of Communications & Development Studies (SCDS)">School of Communications & Development Studies (SCDS)</option>
+                                     <option value="School of Biosystems and Environmental Engineering (SOBEE)">School of Biosystems and Environmental Engineering (SOBEE)</option>
+                                     <option value="School of Open, Distance and eLearning (SODeL)">School of Open, Distance and eLearning (SODeL)</option>
+                                     <option value="School of Biological Sciences">School of Biological Sciences</option>
+                                     <option value="School of Medicine">School of Medicine</option>
+                                 </select>
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="roleInput" class="form-label">Department</label>
+                                 <select name="department" class="form-select" id="roleInput">
+                                     <option value="Department of Electrical & Electronics Engineering" selected>Department of Electrical & Electronics Engineering</option>
+                                     <option value="Department of Social Sciences & Humanities">Department of Social Sciences & Humanities</option>
+                                     <option value="Department of Telecommunication & Information Engineering">Department of Telecommunication & Information Engineering</option>
+                                     <option value="School for Human Resource Development">School for Human Resource Development</option>
+                                     <option value="Department of Physics">Department of Physics</option>
+                                     <option value="Department of Food Science">Department of Food Science</option>
+                                     <option value="Department of Civil Engineering">Department of Civil Engineering</option>
+                                     <option value="Department of Information Technology">Department of Information Technology</option>
+                                     <option value="Department of Microbiology">Department of Microbiology</option>
+                                     <option value="Department of Horticulture">Department of Horticulture</option>
+                                     <option value="Department of Geomatic & Geospatial Information Systems">Department of Geomatic & Geospatial Information Systems</option>
+                                     <option value="Institute for Biotechnology Research">Institute for Biotechnology Research</option>
+                                     <option value="Department of Mechatronic Engineering">Department of Mechatronic Engineering</option>
+                                     <option value="Department of Mechanical Engineering">Department of Mechanical Engineering</option>
+                                     <option value="Department of Pure & Applied Mathematics">Department of Pure & Applied Mathematics</option>
+                                     <option value="Department of Statistics & Actuarial Sciences">Department of Statistics & Actuarial Sciences</option>
+                                     <option value="Department of Botany">Department of Botany</option>
+                                     <option value="Department of Land Resources Planning & Management">Department of Land Resources Planning & Management</option>
+                                     <option value="Department of Entrepreneurship & Procurement">Department of Entrepreneurship & Procurement</option>
+                                 </select>
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="departmentInput" class="form-label">Role</label>
+                                 <select name="role" class="form-select" id="departmentInput">
+                                     <option value="dda3da11-4f54-46bf-9f79-294366a36e7b" selected>Administrator</option>
+                                     <option value="4eaf8b95-fa7f-4227-8aa3-e7c45bd63590">Payroll Manager</option>
+                                     <option value="efab52fa-75e4-4fde-8441-37a9812d2b1a">Staff</option>
+                                 </select>
+                             </div>
+
+                         </div>
+
+                         <div class="carousel-item">
+                             <p class="form-text mb-3 text-center">
+                                 Enter salary details
+                             </p>
+
+                             <div class="mb-4">
+                                 <label for="basicSalaryInput" class="form-label">Basic Salary</label>
+                                 <input name="basic_salary" type="number" class="form-control" id="basicSalaryInput" placeholder="">
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="payeeInput" class="form-label">PAYE</label>
+                                 <input name="paye" type="number" class="form-control" id="payeeInput" placeholder="" readonly>
+                             </div>
+
+                             <div class="row mb-4">
+                                 <div class="col">
+                                     <label for="nssfInput" class="form-label">NSSF</label>
+                                     <input name="nssf" id="nssfInput" type="text" class="form-control" placeholder="" readonly>
+                                 </div>
+
+                                 <div class="col">
+                                     <label for="nhifInput" class="form-label">NHIF</label>
+                                     <input name="nhif" id="nhifInput" type="text" class="form-control" placeholder="" readonly>
+                                 </div>
+                             </div>
+
+                             <label for="helbInput" class="form-label">HELB</label>
+                             <div class="input-group mb-4">
+                                 <div class="input-group-text">
+                                     <input id="helbCheckbox" class="form-check-input mt-0" type="checkbox" value="" aria-label="helb-input">
+                                 </div>
+                                 <input id="helbInput" name="helb" type="text" class="form-control" readonly>
+                             </div>
+
+                            <script>
+  // Get the input fields by their IDs
+  const basicSalaryInput = document.getElementById('basicSalaryInput');
+  const payeeInput = document.getElementById('payeeInput');
+  const nssfInput = document.getElementById('nssfInput');
+  const nhifInput = document.getElementById('nhifInput');
+  const helbInput = document.getElementById('helbInput');
+  const helbCheckbox = document.getElementById('helbCheckbox');
+
+  // Add an event listener to the basic_salary input to calculate PAYE, NSSF, and NHIF when it changes
+  basicSalaryInput.addEventListener('change', function() {
+    const basicSalary = parseFloat(basicSalaryInput.value);
+    if (!isNaN(basicSalary)) {
+      const paye = basicSalary * 0.3; // Calculate 30% of basicSalary for PAYE
+      const nssf = basicSalary * 0.06; // Calculate 6% of basicSalary for NSSF
+      const nhif = basicSalary * 0.0275; // Calculate 2.75% of basicSalary for NHIF
+      const helb = basicSalary * 0.25;
+
+      payeeInput.value = paye.toFixed(2);
+      nssfInput.value = nssf.toFixed(2);
+      nhifInput.value = nhif.toFixed(2);
+      helbInput.value = helb.toFixed(2);
+    }
+  });
+
+  // Add an event listener to the helbCheckbox to enable/disable the helbInput
+  helbCheckbox.addEventListener('change', function() {
+    helbInput.disabled = !helbCheckbox.checked; // Disable helbInput if checkbox is not checked
+  });
+</script>
+
+
+                             <label for="paymentInput" class="form-label">Enter mode of payment and details</label>
+                             <div id="paymentInput" class="input-group mb-4">
+                                 <select name="payment_method" class="form-select">
+                                     <option value="Bank Transfer">Bank Transfer (Electronic Funds Transfer - EFT)</option>
+                                     <option value="Mobile Money">Mobile Money (e.g., M-Pesa, Airtel Money)</option>
+                                     <option value="Cheque">Cheque</option>
+                                     <option value="Cash">Cash</option>
+                                     <option value="Payroll Card">Payroll Card</option>
+                                 </select>
+                                 <input name="payment_details" type="text" class="form-control" aria-label="Text input with dropdown button">
+                             </div>
+
+                             <div class="mb-4">
+                                 <label for="passwordInput" class="form-label">Password</label>
+                                 <input name="password" type="password" class="form-control" id="passwordInput" placeholder="">
+                             </div>
+
+                         </div>
+                    </div>
+
+                 <div class="container">
+                     <button class="btn btn-success rounded-4 mb-4" type="submit">
+                         Add employee
+                     </button>
+                 </div>
+                </form>
+            </div>
+
+
+            <div class="container text-center">
+                <button id="previous-button" class="btn btn-outline-dark rounded-4 mb-4" data-bs-target="#createCarousel" data-bs-slide="previous">Previous</button>
+                <button id="next-button" class="btn btn-outline-dark rounded-4 mb-4" data-bs-target="#createCarousel" data-bs-slide="next">Next</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
